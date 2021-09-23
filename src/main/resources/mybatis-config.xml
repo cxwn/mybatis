@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <settings>
+        <setting name="logImpl" value="LOG4J"/>
+    </settings>
+
+    <typeAliases>
+        <package name="com.ivandu.mybatis.model"/>
+    </typeAliases>
+
+    <!-- 配置 mybatis 运行环境 -->
+    <environments default="development">
+        <environment id="development">
+            <!-- type="JDBC" 代表直接使用 JDBC 的提交和回滚设置 -->
+            <transactionManager type="JDBC" />
+            <!-- POOLED 表示支持 JDBC 数据源连接池 -->
+            <!-- 数据库连接池，由 Mybatis 管理，数据库名是 mybatis，MySQL 用户名 root，密码为:drh123 -->
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.cj.jdbc.Driver" />
+                <property name="url" value="jdbc:mysql://10.1.1.88:3306/mybatis" />
+                <property name="username" value="root" />
+                <property name="password" value="drh123" />
+            </dataSource>
+        </environment>
+    </environments>
+
+    <mappers>
+        <mapper resource="com/ivandu/mybatis/mapper/UserMapper.xml" />
+    </mappers>
+
+</configuration>
