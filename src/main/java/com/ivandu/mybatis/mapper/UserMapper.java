@@ -7,9 +7,9 @@ import java.util.List;
 public interface UserMapper {
     void insertUser(User user) throws Exception;
 
-    int update(User user) throws Exception;
+    void updateUser(User user) throws Exception;
 
-    int deleteUser(Integer id) throws Exception;
+    void deleteUser(Integer id) throws Exception;
 
     User selectUserById(Integer id) throws Exception;
 

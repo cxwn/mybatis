@@ -17,11 +17,12 @@ public class UserMapperTest {
 
     @BeforeClass
     public static void init() throws IOException {
-        Reader reader = Resources.getResourceAsReader("mybatis-config.xml");
+        Reader reader = Resources.getResourceAsReader("mybatis.cfg.xml");
         sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
         reader.close();
     }
 
+// 插入记录
     @Test
     public void insertUser() {
         SqlSession sqlSession = sqlSessionFactory.openSession();
@@ -37,10 +38,61 @@ public class UserMapperTest {
         {
             e.printStackTrace();
             sqlSession.rollback();
+        } finally {
+            sqlSession.close();
         }
-        sqlSession.close();
     }
 
+// 使用 UserMapper接口查询
+    @Test
+    public void selectAllUsersMapper() {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+            UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+            List<User> users = userMapper.selectAllUsers();
+            for (User user : users) {
+                System.out.printf("%d %s %s\n", user.getId(), user.getUsername(), user.getTelephone());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+// 删除记录
+    @Test
+    public void deleteUser(){
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+        try {
+            userMapper.deleteUser(4);
+            sqlSession.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            sqlSession.rollback();
+        } finally {
+            sqlSession.close();
+        }
+    }
+
+// 更新记录
+    @Test
+    public void updateUser(){
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+        User user;
+        try {
+           user = userMapper.selectUserById(1);
+           user.setUsername("Lily");
+           userMapper.updateUser(user);
+           sqlSession.commit();
+        } catch ( Exception e) {
+            e.printStackTrace();
+            sqlSession.rollback();
+        } finally {
+            sqlSession.close();
+        }
+    }
+
+// 查询所有用户
     @Test
     public void selectAllUsers() {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
@@ -52,21 +104,7 @@ public class UserMapperTest {
         }
     }
 
-    // 使用 UserMapper接口查询
-    @Test
-    public void selectAllUsersMapper() {
-        try {
-            SqlSession sqlSession = sqlSessionFactory.openSession();
-            UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
-            List<User> users = userMapper.selectAllUsers();
-            for(User user: users) {
-                System.out.printf("%d %s %s\n",user.getId(),user.getUsername(),user.getTelephone());
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
+// 根据用户id进行查询
     @Test
     public void selectUserById() {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
