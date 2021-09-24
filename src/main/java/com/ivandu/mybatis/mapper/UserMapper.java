@@ -5,7 +5,7 @@ import com.ivandu.mybatis.model.User;
 import java.util.List;
 
 public interface UserMapper {
-    int insert(User user) throws Exception;
+    void insertUser(User user) throws Exception;
 
     int update(User user) throws Exception;
 
