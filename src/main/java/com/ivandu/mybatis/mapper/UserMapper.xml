@@ -3,39 +3,43 @@
 <mapper namespace="com.ivandu.mybatis.mapper.UserMapper">
     <!-- 自定义返回结果集 -->
     <resultMap id="userMap" type="User">
-        <id property="id" column="id" javaType="Integer"></id>
-        <result property="username" column="username" javaType="String"></result>
-        <result property="password" column="password" javaType="String"></result>
+        <id property="id" column="id" javaType="Integer"/>
+        <result property="username" column="username" javaType="String"/>
+        <result property="telephone" column="telephone" javaType="String"/>
     </resultMap>
     <!-- 定义 SQL 语句，其中 id 需要和接口中的方法名一致 -->
     <!-- useGeneratedKeys：实现自动生成主键 -->
     <!-- keyProperty： 唯一标记一个属性 -->
     <!-- parameterType 指明查询时使用的参数类型，resultType 指明查询返回的结果集类型 -->
     <insert id="insertUser" useGeneratedKeys="true" keyProperty="id">
-        insert into user (username,password) values
-            (#{username},#{password})
+        insert into user (username, telephone)
+        values (#{username}, #{telephone})
     </insert>
 
-    <update id="updateUser"  parameterType="User">
-        update user set
-            username=#{username} where
-            id=#{id}
+    <update id="updateUser" parameterType="User">
+        update user
+        set username=#{username}
+        where id = #{id}
     </update>
 
     <delete id="deleteUser" parameterType="int">
-        delete from user where
-            id=#{id}
+        delete
+        from user
+        where id = #{id}
     </delete>
 
     <!-- 如未为 Java Bean 起类别名，resultType="com.ivandu.mybatis.model.User" -->
-
     <!-- 使用 resultType 时，一定要保证，你属性名与字段名相同；如果不相同，就使用 resultMap -->
+
     <select id="selectUserById" parameterType="int" resultType="User">
-        select * from user where id=#{id}
+        select *
+        from user
+        where id = #{id}
     </select>
 
-    <select id="selectAllUser" resultMap="userMap">
-        select * from user
+    <select id="selectAllUsers" resultMap="userMap">
+        select *
+        from user
     </select>
 
 </mapper>
