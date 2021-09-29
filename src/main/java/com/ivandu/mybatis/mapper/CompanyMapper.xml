@@ -1,24 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ivandu.mybatis.mapper.CompanyMapper">
-
-    <select id="selectCompanyById" parameterType="int" resultMap="companymap">
-        select *
-        from company com,
-             ceo
-        where com.id_ceo_com = ceo.id_ceo
-          and com.id_com = #{id}
+    <select id="selectCompanyAndStaffById" parameterType="Integer" resultMap="companyMap">
+        select com.id, com.name, staff.id, staff.name, staff.age
+        from company com left outer join staff on com.id = staff.id_com
+        where com.id = #{id}
     </select>
 
-    <!-- resultMap: 映射实体类和字段之间的一一对应的关系 -->
-    <resultMap id="companymap" type="Company">
-        <id property="id" column="id_com"/>
-        <result property="name" column="name_com"/>
-        <!-- 一对一关联映射：association -->
-        <association property="ceo" javaType="CEO">
-            <id property="id" column="id_ceo" javaType="Integer"/>
-            <result property="name" column="name_ceo" javaType="String"/>
-            <result property="age" column="age_ceo" javaType="Integer"/>
-        </association>
+    <resultMap id="companyMap" type="Company">
+        <id property="id" column="id" />
+        <result property="name" column="name" />
+        <collection property="staffs" ofType="Staff" resultMap="staffsMap" />
+    </resultMap>
+
+    <resultMap id="staffsMap" type="Staff">
+        <id property="id" column="id"/>
+        <result property="name" column="name" />
+        <result property="age" column="age" />
     </resultMap>
 </mapper>

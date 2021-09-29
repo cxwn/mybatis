@@ -2,6 +2,7 @@ package com.ivandu.mybatis;
 
 import com.ivandu.mybatis.mapper.CompanyMapper;
 import com.ivandu.mybatis.model.Company;
+import com.ivandu.mybatis.model.Staff;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -9,32 +10,28 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import java.io.InputStream;
+import java.io.Reader;
+import java.util.List;
 
-public class OneToOneTest {
-
+public class OneToMany {
     public static SqlSessionFactory sqlSessionFactory;
 
     @BeforeClass
-    public static void init() throws Exception{
+    public static void init() throws Exception {
         String resource = "mybatis.cfg.xml";
-        InputStream reader = Resources.getResourceAsStream(resource);
+        Reader reader = Resources.getResourceAsReader(resource);
         sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
         reader.close();
     }
 
     @Test
-    public void selectCompanyById(){
+    public void selectCompanyAndStaffById() {
         Company company;
         SqlSession sqlSession = sqlSessionFactory.openSession();
         try (sqlSession) {
             CompanyMapper companyMapper = sqlSession.getMapper(CompanyMapper.class);
-            company = companyMapper.selectCompanyById(2);
-            System.out.println(company.getId() + "\t" +
-                    company.getName() + "\t" +
-                            company.getCeo().getAge() + "\t" +
-                            company.getCeo().getId() + "\t" +
-                            company.getCeo().getName());
+            company = companyMapper.selectCompanyAndStaffById(2);
+            System.out.println(company.toString());
         } catch (Exception e) {
             e.printStackTrace();
         }

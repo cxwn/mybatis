@@ -1,24 +1,26 @@
 package com.ivandu.mybatis.model;
 
+import java.util.List;
+
 public class Company {
     private Integer id;
     private String name;
-    private CEO ceo;
+    private List<Staff> staffs;
 
     public Company(){}
 
-    public Company(Integer id, String name, CEO ceo) {
+    public Company(Integer id, String name, List<Staff> staffs) {
         this.id = id;
         this.name = name;
-        this.ceo = ceo;
+        this.staffs = staffs;
+    }
+
+    public Integer getId() {
+        return id;
     }
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Integer getId() {
-        return this.id;
     }
 
     public String getName() {
@@ -29,11 +31,27 @@ public class Company {
         this.name = name;
     }
 
-    public CEO getCeo() {
-        return ceo;
+    public List<Staff> getStaffs() {
+        return staffs;
     }
 
-    public void setCeo(CEO ceo) {
-        this.ceo = ceo;
+    public void setStaffs(List<Staff> staffs) {
+        this.staffs = staffs;
+    }
+
+    @Override
+    public String toString() {
+        String[] strings = new String[staffs.size()];
+        List<Staff> staffs = this.getStaffs();
+        staffs.toArray(strings);
+        StringBuilder stringBuilder = null;
+        for(String s: strings){
+           stringBuilder.append("Company {" +
+                    "id=" + id +
+                    ", name='" + name + "\'" +
+                    ", staffs=" + s +
+                    '}' + '\n');
+        }
+        return stringBuilder.toString();
     }
 }
