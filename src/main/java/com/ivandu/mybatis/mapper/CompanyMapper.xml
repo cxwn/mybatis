@@ -2,20 +2,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ivandu.mybatis.mapper.CompanyMapper">
     <select id="selectCompanyAndStaffById" parameterType="Integer" resultMap="companyMap">
-        select com.id, com.name, staff.id, staff.name, staff.age
+        select com.id, com.name, staff.id sid, staff.name sname, staff.age
         from company com left outer join staff on com.id = staff.id_com
-        where com.id = #{id}
+        where com.id = #{cid}
     </select>
 
     <resultMap id="companyMap" type="Company">
         <id property="id" column="id" />
         <result property="name" column="name" />
-        <collection property="staffs" ofType="Staff" resultMap="staffsMap" />
+        <collection property="staffs" ofType="Staff" resultMap="staffsMap" column="staffs"/>
     </resultMap>
 
-    <resultMap id="staffsMap" type="Staff">
-        <id property="id" column="id"/>
-        <result property="name" column="name" />
+    <resultMap id="staffsMap" type="Staff" autoMapping="true">
+        <id property="id" column="sid"/>
+        <result property="name" column="sname" />
         <result property="age" column="age" />
     </resultMap>
 </mapper>

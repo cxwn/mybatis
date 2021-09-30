@@ -2,7 +2,6 @@ package com.ivandu.mybatis;
 
 import com.ivandu.mybatis.mapper.CompanyMapper;
 import com.ivandu.mybatis.model.Company;
-import com.ivandu.mybatis.model.Staff;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -11,7 +10,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.Reader;
-import java.util.List;
 
 public class OneToMany {
     public static SqlSessionFactory sqlSessionFactory;
@@ -31,7 +29,7 @@ public class OneToMany {
         try (sqlSession) {
             CompanyMapper companyMapper = sqlSession.getMapper(CompanyMapper.class);
             company = companyMapper.selectCompanyAndStaffById(2);
-            System.out.println(company.toString());
+            System.out.println(company);
         } catch (Exception e) {
             e.printStackTrace();
         }

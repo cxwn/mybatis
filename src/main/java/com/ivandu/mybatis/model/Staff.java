@@ -5,7 +5,8 @@ public class Staff {
     private String name;
     private Integer age;
 
-    public Staff() {}
+    public Staff() {
+    }
 
     public Staff(Integer id, String name, Integer age) {
         this.id = id;

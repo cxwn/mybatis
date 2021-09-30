@@ -41,17 +41,10 @@ public class Company {
 
     @Override
     public String toString() {
-        String[] strings = new String[staffs.size()];
-        List<Staff> staffs = this.getStaffs();
-        staffs.toArray(strings);
-        StringBuilder stringBuilder = null;
-        for(String s: strings){
-           stringBuilder.append("Company {" +
-                    "id=" + id +
-                    ", name='" + name + "\'" +
-                    ", staffs=" + s +
-                    '}' + '\n');
-        }
-        return stringBuilder.toString();
+        return "Company{" +
+                "cid=" + id +
+                ", name='" + name + '\'' +
+                ", staffs=" + staffs +
+                '}';
     }
 }
